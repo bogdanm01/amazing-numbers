@@ -6,26 +6,38 @@ public class Main {
     public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
+        welcomeUser();
+        boolean exit = false;
+        while(!exit) {
+            System.out.print("\nEnter a request: ");
+            long number = scan.nextInt();
+
+            if (number == 0) exit = true;
+            else processSingleNumber(number);
+
+        }
+        System.out.println("\nGoodbye!");
+
+    }
+
+    private static void welcomeUser() {
         System.out.println("Welcome to Amazing Numbers!");
         System.out.println("\nSupported requests:");
         System.out.println("- enter a natural number to know it's properties;");
+        System.out.println("- enter two natural numbers to obtain the properties of the list:");
+        System.out.println("  * the first parameter represents a starting number;");
+        System.out.println("  * the second parameter shows how many consecutive numbers are to be printed;");
+        System.out.println("- separate parameters with one space;");
         System.out.println("- enter 0 to exit.");
-        System.out.print("\nEnter a request: ");
-
-        long number = scan.nextLong();
-
-        while(number != 0) {
-            process(number);
-            System.out.print("\nEnter a request: ");
-            number = scan.nextLong();
-        }
-
-        System.out.println("Goodbye!");
     }
 
-    private static void process(long number) {
+    private static void processListOfNumbers() { // for processing lists of numbers
+
+    }
+
+    private static void processSingleNumber(long number) { // for processing single number inputs only
         if (!(number < 0)) {
-            System.out.println("Properties of " + number);
+            System.out.println("\nProperties of " + number);
             System.out.println("even: " + checkParity(number));
             System.out.println("odd: " + !checkParity(number));
             System.out.println("buzz: " + checkBuzz(number));
