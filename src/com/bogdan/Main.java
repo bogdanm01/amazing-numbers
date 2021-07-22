@@ -1,4 +1,5 @@
 package com.bogdan;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -7,17 +8,29 @@ public class Main {
 
     public static void main(String[] args) {
         welcomeUser();
+
         boolean exit = false;
+
         while(!exit) {
             System.out.print("\nEnter a request: ");
-            long number = scan.nextInt();
 
-            if (number == 0) exit = true;
-            else processSingleNumber(number);
+            String userInput = scan.nextLine();
 
+            long[] numbers = Arrays.stream(userInput.split(" ")).mapToLong(Long::parseLong).toArray(); // TODO odgonetnuti
+
+            if (numbers[0] == 0) {
+                exit = true;
+            } else if (numbers.length == 1) {
+                // process single number
+                processOneNumber(numbers[0]);
+            }
+            else {
+                System.out.println();
+                processListOfNumbers(numbers);
+            }
         }
-        System.out.println("\nGoodbye!");
 
+        System.out.println("\nGoodbye!");
     }
 
     private static void welcomeUser() {
@@ -31,11 +44,35 @@ public class Main {
         System.out.println("- enter 0 to exit.");
     }
 
-    private static void processListOfNumbers() { // for processing lists of numbers
+    private static void processListOfNumbers(long[] input) {
+        long startingNumber = input[0];
+        long consecutiveNumber = input[1];
 
+        if (startingNumber < 0) { // FIXME: Come up with elegant error system/logic
+            System.out.println("The first parameter should be a natural number or zero.");
+        }
+        if(consecutiveNumber < 1) {
+            System.out.println("The second parameter should ne a natural number");
+        }
+
+        if(!(startingNumber < 0 || consecutiveNumber < 1)) {
+            for (long i = startingNumber; i < startingNumber + consecutiveNumber; i++) {
+                String numberProperties = "";
+
+                if (checkParity(i)) { numberProperties += "even, "; }
+                else { numberProperties += "odd, "; }
+
+                if (checkBuzz(i)) { numberProperties += "buzz, "; }
+                if (checkDuck(i)) { numberProperties += "duck, "; }
+                if (checkPalindrome(i)) { numberProperties += "palindromic, "; }
+
+                System.out.println(i + " is " + numberProperties.substring(0, numberProperties.length()-2));
+            }
+
+        }
     }
 
-    private static void processSingleNumber(long number) { // for processing single number inputs only
+    private static void processOneNumber(long number) {
         if (!(number < 0)) {
             System.out.println("\nProperties of " + number);
             System.out.println("even: " + checkParity(number));
