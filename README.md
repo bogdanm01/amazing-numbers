@@ -29,3 +29,7 @@ Example:
             107 is buzz, duck, odd
             108 is duck, gapful, even
             109 is duck, odd
+            
+    Enter a request: > 0
+    
+    Goodbye!
