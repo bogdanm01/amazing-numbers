@@ -12,6 +12,17 @@ How to use:
 
 Example:
 
+    Welcome to Amazing Numbers!
+
+    Supported requests:
+    - enter a natural number to know its properties;
+    - enter two natural numbers to obtain the properties of the list:
+      * the first parameter represents a starting number;
+      * the second parameters show how many consecutive numbers are to be processed;
+    - two natural numbers and a property to search for;
+    - separate the parameters with one space;
+    - enter 0 to exit.
+    
     Enter a request: > 7880
 
       Properties of 7,880
