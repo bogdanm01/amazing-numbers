@@ -3,12 +3,15 @@ Amazing Numbers is just a simple Java project from JetBrains Academy. It covers 
 It determines various properties of a number such as whether a number is Palindromic, Gapful, Spy, Even, Odd, Duck or Buzz.
 
 How to use:
-- Type a single number in order to see its properties
-- Type a zero to exit
-- Type two numbers to see properties of consecutive numbers:
+- Behavior of the program is different depending on the form of the user request, see supported requests in example down below.
+- Enter a single natural number in order to see its properties
+- Enter a zero to exit
+- Enter two natural numbers to see properties of consecutive numbers:
   - The first parameter represents starting number
   - The second parameter indicated how many consecutive numbers are to be processed
-  - For example, input 10 3 will process 10, 11 and 12
+  - E.G. input 10 3 will process 10, 11 and 12
+- Enter two natural numbers and a property to search for:
+  - E.G. input 1 10 even will print 10 even numbers starting from one
 
 Example:
 
