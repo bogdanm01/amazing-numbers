@@ -1,111 +1,105 @@
 package com.bogdan;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-
     public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
-        welcomeUser();
-
-        boolean exit = false;
-
-        while(!exit) {
+        welcomeUser(); // displays instructions
+        while (true) {
             System.out.print("\nEnter a request: ");
+            String[] searchQueryArray = scan.nextLine().split(" ");
 
-            String userInput = scan.nextLine();
+            if (Long.parseLong(searchQueryArray[0]) == 0) break;
 
-            long[] numbers = Arrays.stream(userInput.split(" ")).mapToLong(Long::parseLong).toArray(); // TODO odgonetnuti
-
-            if (numbers[0] == 0) {
-                exit = true;
-            } else if (numbers.length == 1) {
-                // process single number
-                processOneNumber(numbers[0]);
-            }
-            else {
-                System.out.println();
-                processListOfNumbers(numbers);
+            switch (searchQueryArray.length) {
+                case 1 -> processOneNumber(Long.parseLong(searchQueryArray[0]));
+                case 2 -> processQuery(Long.parseLong(searchQueryArray[0]), Long.parseLong(searchQueryArray[1]));
+                default -> processQuery(Long.parseLong(searchQueryArray[0]), Long.parseLong(searchQueryArray[1]), searchQueryArray); // method overloading
             }
         }
-
         System.out.println("\nGoodbye!");
     }
 
-    private static void welcomeUser() {
+    public static void welcomeUser() {
         System.out.println("Welcome to Amazing Numbers!");
         System.out.println("\nSupported requests:");
         System.out.println("- enter a natural number to know it's properties;");
         System.out.println("- enter two natural numbers to obtain the properties of the list:");
         System.out.println("  * the first parameter represents a starting number;");
         System.out.println("  * the second parameter shows how many consecutive numbers are to be printed;");
+        System.out.println("- two natural numbers and a property to search for;");
         System.out.println("- separate parameters with one space;");
         System.out.println("- enter 0 to exit.");
     }
 
-    private static void processListOfNumbers(long[] input) {
-        long startingNumber = input[0];
-        long consecutiveNumber = input[1];
-
-        if (startingNumber < 0) { // FIXME: Come up with elegant error system/logic
-            System.out.println("The first parameter should be a natural number or zero.");
-        }
-        if(consecutiveNumber < 1) {
-            System.out.println("The second parameter should ne a natural number");
-        }
-
-        if(!(startingNumber < 0 || consecutiveNumber < 1)) {
-            for (long i = startingNumber; i < startingNumber + consecutiveNumber; i++) {
-                String numberProperties = "";
-
-                if (checkParity(i)) { numberProperties += "even, "; }
-                else { numberProperties += "odd, "; }
-
-                if (checkBuzz(i)) { numberProperties += "buzz, "; }
-                if (checkDuck(i)) { numberProperties += "duck, "; }
-                if (checkPalindrome(i)) { numberProperties += "palindromic, "; }
-
-                System.out.println(i + " is " + numberProperties.substring(0, numberProperties.length()-2));
-            }
-
-        }
-    }
-
-    private static void processOneNumber(long number) {
+    public static void processOneNumber(long number) {
         if (!(number < 0)) {
             System.out.println("\nProperties of " + number);
-            System.out.println("even: " + checkParity(number));
-            System.out.println("odd: " + !checkParity(number));
-            System.out.println("buzz: " + checkBuzz(number));
-            System.out.println("duck: " + checkDuck(number));
-            System.out.println("palindromic: " + checkPalindrome(number));
+            System.out.println("        buzz: " + AmazingNumbers.checkBuzz(number));
+            System.out.println("        duck: " + AmazingNumbers.checkDuck(number));
+            System.out.println(" palindromic: " + AmazingNumbers.checkPalindrome(number));
+            System.out.println("      gapful: " + AmazingNumbers.checkGapful(number));
+            System.out.println("         spy: " + AmazingNumbers.checkSpy(number));
+            System.out.println("        even: " + AmazingNumbers.checkParity(number));
+            System.out.println("         odd: " + !AmazingNumbers.checkParity(number));
         } else {
             System.out.println("The first parameter should be a natural number or zero.");
         }
     }
 
-    public static boolean checkParity(long number) {
-        return number % 2 == 0;
-    }
-
-    public static boolean checkBuzz(long number) {
-        return ((number % 10) == 7) || number % 7 == 0;
-    }
-
-    public static boolean checkDuck(long number) {
-        String strNumber = Long.toString(number);
-        return strNumber.substring(1).contains("0");
-    }
-
-    public static boolean checkPalindrome(long number) {
-        long reversedNumber = 0;
-        long check = number;
-        while(check != 0) {
-            int remainder = (int)check % 10;
-            reversedNumber = reversedNumber * 10 + remainder;
-            check = check / 10;
+    public static void processQuery(long startingNumber, long consecutiveNumber) { // for two parameters
+        if (startingNumber < 0) {
+            System.out.println("The first parameter should be a natural number or zero.");
         }
-        return reversedNumber == number;
+        if(consecutiveNumber < 1) {
+            System.out.println("The second parameter should be a natural number");
+        }
+        else if(!(startingNumber < 0)) {
+            for (long i = startingNumber; i < startingNumber + consecutiveNumber; i++) {
+                StringBuilder numberProperties = checkNumberProperties(i);
+                System.out.println("\t\t\t" + i + " is " + numberProperties.substring(0, numberProperties.length()-2));
+            }
+        }
+        System.out.println();
+    }
+
+    public static void processQuery(long startingNumber, long numbersCount, String[] searchQuery) { // for parameters and a property
+        String validProperties = "even, odd, buzz, duck, spy, palindromic, gapful";
+
+        if (startingNumber < 0) {
+            System.out.println("The first parameter should be a natural number or zero.");
+        } if(numbersCount < 1) {
+            System.out.println("The second parameter should be a natural number");
+        } else if (validProperties.contains(searchQuery[2]) || validProperties.toUpperCase().contains(searchQuery[2])) {
+            int x = 0;
+            while (x < numbersCount) {
+
+                StringBuilder numberProperties = checkNumberProperties(startingNumber);
+
+                if (numberProperties.toString().contains(searchQuery[2]) || numberProperties.toString().toUpperCase().contains(searchQuery[2])) {
+                    System.out.println("\t\t\t" + startingNumber + " is " + numberProperties.substring(0, numberProperties.length() - 2));
+                    x++;
+                }
+                startingNumber++;
+            }
+        } else {
+            System.out.println("The property [" + searchQuery[2].toUpperCase() + "] is wrong.");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
+        }
+    }
+
+    private static StringBuilder checkNumberProperties(long i) {
+        StringBuilder numberProperties = new StringBuilder();
+
+        if (AmazingNumbers.checkParity(i)) numberProperties.append("even, ");
+        else numberProperties.append("odd, ");
+        if (AmazingNumbers.checkBuzz(i)) numberProperties.append("buzz, ");
+        if (AmazingNumbers.checkDuck(i)) numberProperties.append("duck, ");
+        if (AmazingNumbers.checkPalindrome(i)) numberProperties.append("palindromic, ");
+        if (AmazingNumbers.checkGapful(i)) numberProperties.append("gapful, ");
+        if (AmazingNumbers.checkSpy(i)) numberProperties.append("spy, ");
+
+        return numberProperties;
     }
 }
