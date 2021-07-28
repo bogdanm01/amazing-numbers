@@ -41,6 +41,23 @@ Example:
             108 is duck, gapful, even
             109 is duck, odd
             
+    Enter a request: 99 9 spy
+
+             123 is spy, odd
+             132 is gapful, spy, even
+             213 is spy, odd
+             231 is buzz, gapful, spy, odd
+             312 is spy, even
+             321 is spy, odd
+           1,124 is spy, even
+           1,142 is spy, even
+           1,214 is spy, even
+
+    Enter a request: 9 3 drake
+
+    The property [DRAKE] is wrong.
+    Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]
+            
     Enter a request: > 0
     
     Goodbye!
