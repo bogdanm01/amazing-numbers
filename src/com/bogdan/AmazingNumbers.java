@@ -9,6 +9,10 @@ package com.bogdan;
 
 public final class AmazingNumbers {
 
+    public static boolean checkSquare (long number) {
+        return number == ((long) Math.sqrt(number) * Math.sqrt(number));
+    }
+
     public static boolean checkGapful (long number) {
         if (!(number < 100)) {
             String numberToString = Long.toString(number);
