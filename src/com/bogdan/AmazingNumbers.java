@@ -1,7 +1,7 @@
 package com.bogdan;
 
 /**
- * The class contains methods for checking different properties of natural numbers. <br> <br>
+ * This class contains methods for checking different properties of natural numbers. <br> <br>
  * Some of them include basic properties like number parity while others,
  * such as gapful, spy, buzz  are inspired by number theory. <br> <br>
  * Return value of each method is boolean true or false.
