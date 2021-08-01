@@ -1,8 +1,15 @@
-package com.bogdan;
+package com.amazingnumbers;
+
+/**
+** Methods return true if there are any errors
+ */
 
 public final class ErrorHandler {
-    public static boolean checkOnePropertyError(String validProperties, String firstSearchParameter) { // true if there any errors
-        if (!isParameterValid(validProperties, firstSearchParameter)) {
+
+    static final String VALID_PROPERTIES = "even odd buzz duck spy palindromic gapful square sunny";
+
+    public static boolean checkOnePropertyError(String firstSearchParameter) { // return true if there any errors
+        if (!isParameterValid(VALID_PROPERTIES, firstSearchParameter)) {
             System.out.println("The property [" + firstSearchParameter.toUpperCase() + "] is wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
@@ -10,31 +17,32 @@ public final class ErrorHandler {
         return false;
     }
 
-    public static boolean checkNumbersErrors(long number1, long number2) { // true if there are any errors
+    public static boolean checkNumbersErrors(long number1, long number2) { // return true if there are any errors
+        boolean flag = false;
         if (number1 < 0) {
             System.out.println("The first parameter should be a natural number or zero.");
-            return true;
+            flag = true;
         }
         if(number2 < 1) {
             System.out.println("The second parameter should be a natural number");
-            return true;
+            flag = true;
         }
-        return false;
+        return flag;
     }
 
-    public static boolean checkTwoPropertiesErrors(String validProperties, String firstSearchParameter, String secondSearchParameter) {
-        if (!(isParameterValid(validProperties, firstSearchParameter)) && (isParameterValid(validProperties, secondSearchParameter))) {
+    public static boolean checkTwoPropertiesErrors(String firstSearchParameter, String secondSearchParameter) {
+        if (!(isParameterValid(VALID_PROPERTIES, firstSearchParameter)) && (isParameterValid(VALID_PROPERTIES, secondSearchParameter))) {
             System.out.println("The property [" + firstSearchParameter.toUpperCase() + "] is wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
         }
-        if (isParameterValid(validProperties, firstSearchParameter) && !(isParameterValid(validProperties, secondSearchParameter))) {
+        if (isParameterValid(VALID_PROPERTIES, firstSearchParameter) && !(isParameterValid(VALID_PROPERTIES, secondSearchParameter))) {
             System.out.println("The property [" + secondSearchParameter.toUpperCase() + "] is wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
 
         }
-        if (!(isParameterValid(validProperties, secondSearchParameter)) && !(isParameterValid(validProperties, firstSearchParameter))) {
+        if (!(isParameterValid(VALID_PROPERTIES, secondSearchParameter)) && !(isParameterValid(VALID_PROPERTIES, firstSearchParameter))) {
             System.out.println("The properties [" + firstSearchParameter.toUpperCase()+", "+ secondSearchParameter.toUpperCase() + "] are wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
@@ -47,7 +55,7 @@ public final class ErrorHandler {
         return false;
     }
 
-    public static boolean areMutuallyExclusive (String firstParameter, String SecondParameter) {
+    private static boolean areMutuallyExclusive (String firstParameter, String SecondParameter) {
         if ((firstParameter.equalsIgnoreCase("EVEN") && SecondParameter.equalsIgnoreCase("ODD")) || (firstParameter.equalsIgnoreCase("ODD") && SecondParameter.equalsIgnoreCase("EVEN")))
             return true;
         if ((firstParameter.equalsIgnoreCase("DUCK") && SecondParameter.equalsIgnoreCase("SPY")) || (firstParameter.equalsIgnoreCase("SPY") && SecondParameter.equalsIgnoreCase("DUCK")))
@@ -55,7 +63,7 @@ public final class ErrorHandler {
         return (firstParameter.equalsIgnoreCase("SUNNY") && SecondParameter.equalsIgnoreCase("SQUARE")) || (firstParameter.equalsIgnoreCase("SQUARE") && SecondParameter.equalsIgnoreCase("SUNNY"));
     }
 
-    public static boolean isParameterValid(String validProperties, String searchParameter) { // checks if searched property is valid, does it exist
+    private static boolean isParameterValid(String validProperties, String searchParameter) { // checks if searched property is valid, does it exist
         return validProperties.contains(searchParameter) || validProperties.toUpperCase().contains(searchParameter);
     }
 }

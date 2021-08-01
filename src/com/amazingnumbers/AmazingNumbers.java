@@ -1,11 +1,4 @@
-package com.bogdan;
-
-/**
- * This class contains methods for checking different properties of natural numbers. <br> <br>
- * Some of them include basic properties like number parity while others,
- * such as gapful, spy, buzz  are inspired by number theory. <br> <br>
- * Return value of each method is boolean true or false.
- */
+package com.amazingnumbers;
 
 public final class AmazingNumbers {
 
@@ -55,7 +48,6 @@ public final class AmazingNumbers {
     }
 
     public static boolean checkDuck(long number) {
-        String strNumber = Long.toString(number);
-        return strNumber.substring(1).contains("0");
+        return Long.toString(number).substring(1).contains("0");
     }
 }

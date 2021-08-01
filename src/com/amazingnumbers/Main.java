@@ -1,11 +1,12 @@
-package com.bogdan;
+package com.amazingnumbers;
 import java.util.Scanner;
 
 public class Main {
-    public static Scanner scan = new Scanner(System.in);
+     static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
-        welcomeUser(); // displays instructions and welcomes user
+
+        welcomeUser();
         while (true) {
             System.out.print("\nEnter a request: ");
             String[] searchQueryArray = scan.nextLine().split(" ");
@@ -17,6 +18,7 @@ public class Main {
                 case 1 -> NumberProcessor.processOneNumber(Long.parseLong(searchQueryArray[0]));
                 case 2 -> NumberProcessor.processQuery(Long.parseLong(searchQueryArray[0]), Long.parseLong(searchQueryArray[1]));
                 default -> NumberProcessor.processQuery(Long.parseLong(searchQueryArray[0]), Long.parseLong(searchQueryArray[1]), searchQueryArray);
+
             }
         }
         System.out.println("Goodbye!");

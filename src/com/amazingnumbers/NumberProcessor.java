@@ -1,4 +1,4 @@
-package com.bogdan;
+package com.amazingnumbers;
 
 public final class NumberProcessor {
 
@@ -25,20 +25,21 @@ public final class NumberProcessor {
             StringBuilder numberProperties = checkNumberProperties(i);
             System.out.println("\t\t\t" + i + " is " + numberProperties.substring(0, numberProperties.length()-2));
         }
+
     }
 
     public static void processQuery(long startingNumber, long numbersCount, String[] searchQuery) { // for parameters and a property
-        String validProperties = "even odd buzz duck spy palindromic gapful square sunny";
+
         String firstSearchParameter = searchQuery[2];
         String secondSearchParameter = searchQuery.length > 3 ? searchQuery[3] : null;
 
         if (ErrorHandler.checkNumbersErrors(startingNumber, numbersCount)) return; // return if there are any errors
 
         if (secondSearchParameter == null) { // for one search property
-            if (ErrorHandler.checkOnePropertyError(validProperties, firstSearchParameter)) return; // return if there are any errors
+            if (ErrorHandler.checkOnePropertyError(firstSearchParameter)) return; // return if there are any errors
             processOneProperty(startingNumber, numbersCount, firstSearchParameter); // process if there aren't any errors
         } else { // if there are two properties
-            if (ErrorHandler.checkTwoPropertiesErrors(validProperties, firstSearchParameter, secondSearchParameter)) return; // return if there are any errors
+            if (ErrorHandler.checkTwoPropertiesErrors(firstSearchParameter, secondSearchParameter)) return; // return if there are any errors
             processTwoProperties(startingNumber, numbersCount, firstSearchParameter, secondSearchParameter); // process if there aren't any errors
         }
     }
@@ -88,4 +89,6 @@ public final class NumberProcessor {
 
         return numberProperties;
     }
+
+
 }
