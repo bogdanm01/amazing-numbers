@@ -9,7 +9,7 @@ public final class ErrorHandler {
     static final String VALID_PROPERTIES = "even odd buzz duck spy palindromic gapful square sunny";
 
     public static boolean checkOnePropertyError(String firstSearchParameter) { // return true if there any errors
-        if (!isParameterValid(VALID_PROPERTIES, firstSearchParameter)) {
+        if (!isParameterValid(firstSearchParameter)) {
             System.out.println("The property [" + firstSearchParameter.toUpperCase() + "] is wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
@@ -31,18 +31,18 @@ public final class ErrorHandler {
     }
 
     public static boolean checkTwoPropertiesErrors(String firstSearchParameter, String secondSearchParameter) {
-        if (!(isParameterValid(VALID_PROPERTIES, firstSearchParameter)) && (isParameterValid(VALID_PROPERTIES, secondSearchParameter))) {
+        if (!(isParameterValid(firstSearchParameter)) && (isParameterValid(secondSearchParameter))) {
             System.out.println("The property [" + firstSearchParameter.toUpperCase() + "] is wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
         }
-        if (isParameterValid(VALID_PROPERTIES, firstSearchParameter) && !(isParameterValid(VALID_PROPERTIES, secondSearchParameter))) {
+        if (isParameterValid(firstSearchParameter) && !(isParameterValid(secondSearchParameter))) {
             System.out.println("The property [" + secondSearchParameter.toUpperCase() + "] is wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
 
         }
-        if (!(isParameterValid(VALID_PROPERTIES, secondSearchParameter)) && !(isParameterValid(VALID_PROPERTIES, firstSearchParameter))) {
+        if (!(isParameterValid(secondSearchParameter)) && !(isParameterValid(firstSearchParameter))) {
             System.out.println("The properties [" + firstSearchParameter.toUpperCase()+", "+ secondSearchParameter.toUpperCase() + "] are wrong.");
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
             return true;
@@ -63,7 +63,7 @@ public final class ErrorHandler {
         return (firstParameter.equalsIgnoreCase("SUNNY") && SecondParameter.equalsIgnoreCase("SQUARE")) || (firstParameter.equalsIgnoreCase("SQUARE") && SecondParameter.equalsIgnoreCase("SUNNY"));
     }
 
-    private static boolean isParameterValid(String validProperties, String searchParameter) { // checks if searched property is valid, does it exist
-        return validProperties.contains(searchParameter) || validProperties.toUpperCase().contains(searchParameter);
+    private static boolean isParameterValid(String searchParameter) { // checks if searched property is valid, does it exist
+        return VALID_PROPERTIES.contains(searchParameter) || VALID_PROPERTIES.toUpperCase().contains(searchParameter);
     }
 }
