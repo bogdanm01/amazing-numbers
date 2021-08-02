@@ -6,6 +6,10 @@ public class Main {
 
     public static void main(String[] args) {
         welcomeUser();
+        requestInput();
+    }
+
+    private static void requestInput() {
         while (true) {
             System.out.print("\nEnter a request: ");
             String[] searchQueryArray = scan.nextLine().split(" ");
@@ -15,9 +19,8 @@ public class Main {
 
             switch (searchQueryArray.length) {
                 case 1 -> NumberProcessor.processOneNumber(Long.parseLong(searchQueryArray[0]));
-                case 2 -> NumberProcessor.processQuery(Long.parseLong(searchQueryArray[0]), Long.parseLong(searchQueryArray[1]));
+                case 2 -> NumberProcessor.processConsecutiveList(Long.parseLong(searchQueryArray[0]), Long.parseLong(searchQueryArray[1]));
                 default -> NumberProcessor.processQuery(Long.parseLong(searchQueryArray[0]), Long.parseLong(searchQueryArray[1]), searchQueryArray);
-
             }
         }
         System.out.println("Goodbye!");
