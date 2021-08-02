@@ -1,5 +1,7 @@
 package com.amazingnumbers;
 
+import java.util.Arrays;
+
 public final class NumberProcessor {
 
     public static void processOneNumber(long number) {
@@ -12,6 +14,7 @@ public final class NumberProcessor {
             System.out.println("         spy: " + AmazingNumbers.checkSpy(number));
             System.out.println("      square: " + AmazingNumbers.checkSquare(number));
             System.out.println("       sunny: " + AmazingNumbers.checkSquare(number+1));
+            System.out.println("     jumping: " + AmazingNumbers.checkJumping(number));
             System.out.println("        even: " + AmazingNumbers.checkParity(number));
             System.out.println("         odd: " + !AmazingNumbers.checkParity(number));
         } else {
@@ -19,37 +22,32 @@ public final class NumberProcessor {
         }
     }
 
-    public static void processQuery(long startingNumber, long consecutiveNumber) { // for two parameters
+    public static void processConsecutiveList(long startingNumber, long consecutiveNumber) { // for two numbers
         if (ErrorHandler.checkNumbersErrors(startingNumber, consecutiveNumber)) return; // return if there are any errors
         for (long i = startingNumber; i < startingNumber + consecutiveNumber; i++) {
             StringBuilder numberProperties = checkNumberProperties(i);
             System.out.println("\t\t\t" + i + " is " + numberProperties.substring(0, numberProperties.length()-2));
         }
-
     }
 
-    public static void processQuery(long startingNumber, long numbersCount, String[] searchQuery) { // for parameters and a property
+    public static void processQuery(long startingNumber, long howManyNumbers, String[] searchQuery) { // for parameters and a property
 
-        String firstSearchParameter = searchQuery[2];
-        String secondSearchParameter = searchQuery.length > 3 ? searchQuery[3] : null;
+        String[] searchParametersArray = Arrays.copyOfRange(searchQuery, 2, searchQuery.length);
 
-        if (ErrorHandler.checkNumbersErrors(startingNumber, numbersCount)) return; // return if there are any errors
+        if (ErrorHandler.checkNumbersErrors(startingNumber, howManyNumbers)) return; // return if there are any errors
 
-        if (secondSearchParameter == null) { // for one search property
-            if (ErrorHandler.checkOnePropertyError(firstSearchParameter)) return; // return if there are any errors
-            processOneProperty(startingNumber, numbersCount, firstSearchParameter); // process if there aren't any errors
-        } else { // if there are two properties
-            if (ErrorHandler.checkTwoPropertiesErrors(firstSearchParameter, secondSearchParameter)) return; // return if there are any errors
-            processTwoProperties(startingNumber, numbersCount, firstSearchParameter, secondSearchParameter); // process if there aren't any errors
-        }
+        if (ErrorHandler.checkProperties(searchParametersArray)) return; // return if there are any error within properties
+
+        printQuery(startingNumber, howManyNumbers, searchParametersArray);
     }
 
-    private static void processTwoProperties(long startingNumber, long numbersCount, String firstSearchParameter, String secondSearchParameter) {
+    private static void printQuery(long startingNumber, long howManyNumbers, String[] searchParametersArray) {
         int x = 0;
-        while (x < numbersCount) {
+
+        while (x < howManyNumbers) {
             StringBuilder numberProperties = checkNumberProperties(startingNumber);
 
-            if (checkParameter(firstSearchParameter, numberProperties) && checkParameter(secondSearchParameter, numberProperties)) {
+            if (checkParameter(searchParametersArray, numberProperties)) { // there is a property / properties in the number
                 System.out.println("\t\t\t" + startingNumber + " is " + numberProperties.substring(0, numberProperties.length() - 2));
                 x++;
             }
@@ -57,21 +55,17 @@ public final class NumberProcessor {
         }
     }
 
-    private static void processOneProperty(long startingNumber, long numbersCount, String firstSearchParameter) {
-        int x = 0;
-        while (x < numbersCount) {
-            StringBuilder numberProperties = checkNumberProperties(startingNumber);
+    private static boolean checkParameter(String[] searchParameter, StringBuilder numberProperties) { // checks if searched property is available in numberProperties
+        boolean flag = true;
 
-            if (checkParameter(firstSearchParameter, numberProperties)) {
-                System.out.println("\t\t\t" + startingNumber + " is " + numberProperties.substring(0, numberProperties.length() - 2));
-                x++;
+        for (String property : searchParameter) {
+            if(!(numberProperties.toString().contains(property.toLowerCase()))) {
+                flag = false;
+                break;
             }
-            startingNumber++;
         }
-    }
 
-    private static boolean checkParameter(String searchParameter, StringBuilder numberProperties) { // checks if searched property is available in numberProperties
-        return numberProperties.toString().contains(searchParameter) || numberProperties.toString().toUpperCase().contains(searchParameter);
+        return flag;
     }
 
     private static StringBuilder checkNumberProperties(long i) {
@@ -83,12 +77,11 @@ public final class NumberProcessor {
         if (AmazingNumbers.checkGapful(i)) numberProperties.append("gapful, ");
         if (AmazingNumbers.checkSpy(i)) numberProperties.append("spy, ");
         if (AmazingNumbers.checkSquare(i)) numberProperties.append("square, ");
+        if (AmazingNumbers.checkJumping(i)) numberProperties.append("jumping, ");
         if (AmazingNumbers.checkSquare(i+1)) numberProperties.append("sunny, ");
         if (AmazingNumbers.checkParity(i)) numberProperties.append("even, ");
         else numberProperties.append("odd, ");
 
         return numberProperties;
     }
-
-
 }
