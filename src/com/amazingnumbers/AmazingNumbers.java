@@ -1,9 +1,29 @@
 package com.amazingnumbers;
 
+import java.util.ArrayList;
+
 public final class AmazingNumbers {
 
-    public static boolean checkSquare (long number) {
-        return number == ((long) Math.sqrt(number) * Math.sqrt(number));
+    public static boolean checkJumping (long number) {
+        ArrayList<Long> digits = new ArrayList<>();
+
+        while (number != 0) {
+            digits.add(number % 10);
+            number /= 10;
+        }
+
+        return isFlagJumping(digits);
+    }
+
+    private static boolean isFlagJumping(ArrayList<Long> digits) {
+        boolean flag = true;
+        for (int i = 0; i < digits.size() - 1; i++) {
+            if (Math.abs(digits.get(i) - digits.get(i + 1)) != 1) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
 
     public static boolean checkGapful (long number) {
@@ -38,6 +58,8 @@ public final class AmazingNumbers {
         }
         return sum == product;
     }
+
+    public static boolean checkSquare (long number) { return number == ((long) Math.sqrt(number) * Math.sqrt(number)); }
 
     public static boolean checkParity(long number) {
         return number % 2 == 0;
