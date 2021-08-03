@@ -5,7 +5,7 @@ import java.util.Arrays;
 public final class NumberProcessor {
     public static void processOneNumber(long number) {
         if (!(number < 0)) {
-            System.out.println("Properties of " + number);
+            System.out.printf("Properties of %,d%n", number);
             System.out.println("        buzz: " + AmazingNumbers.checkBuzz(number));
             System.out.println("        duck: " + AmazingNumbers.checkDuck(number));
             System.out.println(" palindromic: " + AmazingNumbers.checkPalindrome(number));
@@ -27,7 +27,7 @@ public final class NumberProcessor {
         if (ErrorHandler.checkNumbersErrors(startingNumber, consecutiveNumber)) return; // return if there are any errors
         for (long i = startingNumber; i < startingNumber + consecutiveNumber; i++) {
             StringBuilder numberProperties = checkNumberProperties(i);
-            System.out.println("\t\t\t" + i + " is " + numberProperties.substring(0, numberProperties.length()-2));
+            System.out.printf("\t\t\t %,1d is %s%n",i, numberProperties.substring(0, numberProperties.length()-2));
         }
     }
 
