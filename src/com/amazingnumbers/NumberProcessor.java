@@ -44,7 +44,7 @@ public final class NumberProcessor {
             StringBuilder numberProperties = checkNumberProperties(startingNumber);
 
             if (checkParameter(searchParametersArray, numberProperties)) { // there is a property / properties in the number
-                System.out.println("\t\t\t" + startingNumber + " is " + numberProperties.substring(0, numberProperties.length() - 2));
+                System.out.printf("\t\t\t %,1d is %s%n",startingNumber, numberProperties.substring(0, numberProperties.length()-2));
                 x++;
             }
             startingNumber++;
