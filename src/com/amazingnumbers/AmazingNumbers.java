@@ -1,8 +1,34 @@
 package com.amazingnumbers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public final class AmazingNumbers {
+
+    public static boolean checkHappy(long number) {
+
+        ArrayList<Long> sequence = new ArrayList<>();
+        sequence.add(number);
+
+        if (number != 1) {
+            for (int i = 0; i < sequence.size(); i++) {
+                long sum = 0;
+                if (sequence.get(i) == 1) { return true; }
+
+                long check = sequence.get(i);
+                while (check != 0) {
+                    sum += Math.pow(check % 10, 2);
+                    check /= 10;
+                }
+
+                if (sum == 145 || sum == 3 || sum == 4 || sum == 5 || sum == 6) { return false; }
+
+                sequence.add(sum);
+            }
+        }
+        return true;
+    }
 
     public static boolean checkJumping (long number) {
         ArrayList<Long> digits = new ArrayList<>();
@@ -60,16 +86,7 @@ public final class AmazingNumbers {
     }
 
     public static boolean checkSquare (long number) { return number == ((long) Math.sqrt(number) * Math.sqrt(number)); }
-
-    public static boolean checkParity(long number) {
-        return number % 2 == 0;
-    }
-
-    public static boolean checkBuzz(long number) {
-        return ((number % 10) == 7) || number % 7 == 0;
-    }
-
-    public static boolean checkDuck(long number) {
-        return Long.toString(number).substring(1).contains("0");
-    }
+    public static boolean checkParity(long number) { return number % 2 == 0; }
+    public static boolean checkBuzz(long number) { return ((number % 10) == 7) || number % 7 == 0; }
+    public static boolean checkDuck(long number) { return Long.toString(number).substring(1).contains("0"); }
 }

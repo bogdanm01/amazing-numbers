@@ -2,13 +2,9 @@ package com.amazingnumbers;
 
 import java.util.Arrays;
 
-/**
- ** Methods return true if there are any errors
- */
-
 public final class ErrorHandler {
 
-    static final String VALID_PROPERTIES = "even odd buzz duck spy palindromic gapful square sunny jumping";
+    static final String VALID_PROPERTIES = "even odd buzz duck spy palindromic gapful square sunny jumping happy sad -even -odd -buzz -duck -spy -palindromic -gapful -square -sunny -jumping -happy -sad";
 
     public static boolean checkNumbersErrors(long number1, long number2) { // return true if there are any errors
         boolean flag = false;
@@ -37,9 +33,8 @@ public final class ErrorHandler {
             return true;
         }
 
-        if (searchProperties.length > 1) {
-            return areMutuallyExclusive(searchProperties);
-        }
+        if (searchProperties.length > 1) { return areMutuallyExclusive(searchProperties); }
+
         return false;
     }
 
@@ -55,32 +50,75 @@ public final class ErrorHandler {
     }
 
     private static void printAvailableProperties() {
-        System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING, EVEN, ODD]");
+        System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING, HAPPY, SAD]");
     }
 
     private static boolean areMutuallyExclusive (String[] searchProperties) {
-        boolean errorsExist = false;
-        String arrayToString = Arrays.toString(searchProperties);
-
-        if ((arrayToString.contains("EVEN") && arrayToString.contains("ODD")) || (arrayToString.contains("even") && arrayToString.contains("odd"))) {
+        if (isContain(searchProperties,"EVEN") && isContain(searchProperties,"ODD") || (isContain(searchProperties,"-EVEN") && isContain(searchProperties,"-ODD"))) {
             System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]");
             System.out.println("There are no numbers with these properties.");
-            errorsExist = true;
+            return true;
         }
-        if ((arrayToString.contains("SQUARE") && arrayToString.contains("SUNNY")) || (arrayToString.contains("square") && arrayToString.contains("sunny"))) {
-            System.out.println("The request contains mutually exclusive properties: [SQUARE, SUNNY]");
+        if (isContain(searchProperties,"SUNNY") && isContain(searchProperties,"SQUARE")){
+            System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]");
             System.out.println("There are no numbers with these properties.");
-            errorsExist = true;
+            return true;
         }
-        if ((arrayToString.contains("DUCK") && arrayToString.contains("SPY")) || (arrayToString.contains("duck") && arrayToString.contains("spy"))) {
-            System.out.println("The request contains mutually exclusive properties: [DUCK, SPY]");
+        if (isContain(searchProperties,"DUCK") && isContain(searchProperties,"SPY")){
+            System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]");
             System.out.println("There are no numbers with these properties.");
-            errorsExist = true;
+            return true;
         }
-        return errorsExist;
+        if (isContain(searchProperties,"HAPPY") && isContain(searchProperties,"SAD") || (isContain(searchProperties,"-HAPPY") && isContain(searchProperties,"-SAD"))) {
+            System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]");
+            System.out.println("There are no numbers with these properties.");
+            return true;
+        }
+
+        return findOppositeProperties(searchProperties);
+    }
+
+    private static boolean findOppositeProperties(String[] searchProperties) {
+        String[] oppositeProperties = new String[2];
+        int k = 0;
+
+        for (String i : searchProperties) {
+            for (String j : searchProperties) {
+                if (i.equalsIgnoreCase(oppositePair(j))) {
+                    oppositeProperties[k++] = i;
+                    break;
+                }
+            }
+        }
+
+        if (k == 2) {
+            System.out.println("The request contains mutually exclusive properties: " + Arrays.toString(oppositeProperties).toUpperCase());
+            System.out.println("There are no numbers with these properties.");
+            return true;
+        }
+
+        return false;
     }
 
     private static boolean isParameterValid(String searchParameter) { // checks if searched property is valid, does it exist
         return VALID_PROPERTIES.contains(searchParameter) || VALID_PROPERTIES.toUpperCase().contains(searchParameter);
+    }
+
+    private static boolean isContain(String[] source, String subItem) {
+        boolean hasTerm = false;
+        for (String word : source) {
+            if (word.toLowerCase().equals(subItem.toLowerCase())) {
+                hasTerm = true;
+                break;
+            }
+        }
+        return hasTerm;
+    }
+
+    private static String oppositePair (String property) {
+        if(property.startsWith("-"))
+            return property.replace("-","");
+
+        return "-" + property;
     }
 }
