@@ -59,18 +59,18 @@ public final class ErrorHandler {
             System.out.println("There are no numbers with these properties.");
             return true;
         }
-        if (isContain(searchProperties,"SUNNY") && isContain(searchProperties,"SQUARE")){
-            System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]");
+        if (isContain(searchProperties,"SUNNY") && isContain(searchProperties,"SQUARE") ||  (isContain(searchProperties,"-SUNNY") && isContain(searchProperties,"-SQUARE")){
+            System.out.println("The request contains mutually exclusive properties: [SUNNY, SQUARE]");
             System.out.println("There are no numbers with these properties.");
             return true;
         }
-        if (isContain(searchProperties,"DUCK") && isContain(searchProperties,"SPY")){
-            System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]");
+        if (isContain(searchProperties,"DUCK") && isContain(searchProperties,"SPY") || (isContain(searchProperties,"-DUCK") && isContain(searchProperties,"-SPY"))){
+            System.out.println("The request contains mutually exclusive properties: [DUCK, SPY]");
             System.out.println("There are no numbers with these properties.");
             return true;
         }
         if (isContain(searchProperties,"HAPPY") && isContain(searchProperties,"SAD") || (isContain(searchProperties,"-HAPPY") && isContain(searchProperties,"-SAD"))) {
-            System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]");
+            System.out.println("The request contains mutually exclusive properties: [HAPPY, SAD]");
             System.out.println("There are no numbers with these properties.");
             return true;
         }
